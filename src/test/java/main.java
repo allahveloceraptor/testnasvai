@@ -92,6 +92,19 @@ public class main {
             ValidatableResponse response=request.post("https://petstore.swagger.io/").then().statusCode(200);
 
         }
+        @Test
+    void Postreq1(){
+        RestAssured.baseURI="http://httpbin.org/";
+        given();
+        JSONObject jsonfile2= new JSONObject();
+        jsonfile2.put("name",200);
+        RequestSpecification requrst = RestAssured.given();
+        requrst.body(jsonfile2.toString());
+        ValidatableResponse asssertresp = requrst.post().then().statusCode(405);
+
+
+
+        }
 
 
 		       /*header("dfd","fsdfds").

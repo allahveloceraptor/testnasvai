@@ -7,13 +7,25 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
+import java.util.Properties;
+
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class main {
+    Properties data = new Properties();
+    String prop = RestAssured.baseURI="http://httpbin.org";
+    public String getProp(){
+        return prop;
+    }
+
     @BeforeMethod
     void beforemethod(){
         RestAssured.baseURI="https://swapi.co/";
+        Properties data = new Properties();
+        data.get("b");
+
     }
 
     @Test
@@ -103,6 +115,16 @@ public class main {
         ValidatableResponse asssertresp = requrst.post().then().statusCode(405);
 
 
+        }
+        @Test
+    void gettest(){
+      //  getProp();
+            RestAssured.baseURI="http://httpbin.org";
+        given().
+                param("delay",2).
+        when().
+                get("/delay/2").
+                then().assertThat().statusCode(200);
 
         }
 

@@ -7,8 +7,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
 import java.util.Properties;
-
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -124,10 +124,44 @@ public class main {
                 param("delay",2).
         when().
                 get("/delay/2").
-                then().assertThat().statusCode(200);
+                then().assertThat().statusCode(200).body(equalTo(2));
 
+        }@Test
+        void jiraPOSTtestauth(){
+        RestAssured.baseURI="http://localhost:8080/";
+        given();
+        JSONObject auth = new JSONObject();
+        auth.put("username","nitroside18");
+        auth.put("password","905555aa");
+        RequestSpecification requrst = RestAssured.given();
+        requrst.body(auth.toString());
+        ValidatableResponse asssertresp = requrst.post().then().statusCode(200);
         }
+        @Test
+    void createissue(){
+            RestAssured.baseURI = "https:http://localhost:8080/rest/api/2";
+            String createIssueUrl = "/issue";
+            String searchurl = "/search?jql=assignee='testUser'&startAt=1&maxResults=1&fields=id,key,summary,description";
 
+            HashMap<String,String> headerMap = new HashMap<String,String>();
+            headerMap.put("Content-Type", "application/json");
+            headerMap.put("Authorization", "Basic bmC5jb20sdsdyYWtpbmczMjE=");
+
+            String createPaylod = "{\"fields\":{\"project\":{\"key\":\"CRE\"},\"summary\":\"Test REST API for creating an Issue\",\"description\":\"Creating an issue\",\"issuetype\":{\"name\":\"Bug\"},\"labels\":[\"Automation\"],\"assignee\":{\"name\":\"\"},\"environment\":\"TestEnv\",\"priority\":{\"name\":\"High\"}}}";
+        }
+        @Test
+    void POSTtollsqa(){
+        RestAssured.baseURI= "http://restapi.demoqa.com/customer/register";
+        JSONObject obj = new JSONObject();
+        obj.put("FirstName","ashot");
+        obj.put("LastName" , "cumshot");
+        obj.put("UserName","shotcumshovich");
+        obj.put("Password","1234556bb");
+        obj.put("Email","ahsotcimshot@donbass.ru");
+        RequestSpecification requst=RestAssured.given();
+        requst.body(obj.toString());
+        ValidatableResponse res=requst.post().then().statusCode(200);
+        }
 
 		       /*header("dfd","fsdfds").
 		       cookie("dsfs","csder").
